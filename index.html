@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Serindu Project | Romanticize Life</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+
+        /* iPhone/iOS Safari Specific Fixes */
+        /* Prevent tap highlight */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Prevent callout on long-tap */
+        img, a {
+            -webkit-touch-callout: none;
+        }
+        
+        /* Fix for 100vh issue on iOS */
+        @supports (-webkit-touch-callout: none) {
+            .hero-image {
+                height: 100dvh;
+                height: -webkit-fill-available;
+            }
+        }
+        
+        /* Safe area insets for iPhone X and above */
+        @supports (padding: max(0px)) {
+            .menu-toggle {
+                top: max(25px, env(safe-area-inset-top));
+                right: max(25px, env(safe-area-inset-right));
+            }
+            
+            .nav-menu {
+                padding-top: max(80px, env(safe-area-inset-top));
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+            }
+            
+            .back-button {
+                top: max(30px, env(safe-area-inset-top));
+                left: max(30px, env(safe-area-inset-left));
+            }
+        }
+        
+        /* Smooth scrolling fix for iOS */
+        @media (pointer: coarse) {
+            html {
+                scroll-behavior: auto;
+            }
+            
+            [data-scroll] {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+        
+        /* Gallery touch optimizations */
+        .gallery-track {
+            touch-action: pan-y;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Prevent iOS from zooming in on gallery */
+        .couple-gallery {
+            touch-action: manipulation;
+        }
+
+        /* Reset and Base Styles */
+        :root {
+            --cream: #f8f5f0;
+            --dark: #1a1a1a;
+            --gold: #c0a878;
+            --light-gray: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            scroll-behavior:smooth;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            touch-action: manipulation;
+        }
+
+        /* Layout Containers */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Scroll Transition Elements */
+        [data-scroll] {
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 1s ease;
+        }
+
+        [data-scroll="fade-up"] {
+            transform: translateY(50px);
+        }
+
+        [data-scroll="fade-down"] {
+            transform: translateY(-80px);
+        }
+
+        [data-scroll="fade-left"] {
+            transform: translateX(-30px);
+        }
+
+        [data-scroll="fade-right"] {
+            transform: translateX(30px);
+        }
+
+        [data-scroll].is-visible {
+            opacity: 1;
+            transform: translate(0);
+        }
+
+        /* Hero Section */
+        .hero-image {
+            background-image: url(images/sampuldpn.webp);
+            width: 100%;
+            height: 100vh;
+            background-position: center center;
+            background-size: cover;
+            object-fit: cover;
+            background-attachment: scroll;
+
+        }
+
+        /* Mobile (Portrait) - Up to 480px */
+        @media (orientation: portrait) {
+            .hero-image {
+                background-image: url(images/sampuldpn2.jpg);
+        }
+        .menu-toggle {
+            width: 40px;
+            height: 40px;
+        }
+        .couple-gallery {
+            padding-bottom: 150%; /* Adjust aspect ratio for mobile */
+        }
+    }
+
+        /* Hamburger Button with Circle Background */
+        .menu-toggle {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: none;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Hamburger Lines */
+        .menu-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--dark);
+            position: absolute;
+            margin: 16px 0;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle span:nth-child(1) { top: 0; }
+        .menu-toggle span:nth-child(2) { top: 7px; }
+        .menu-toggle span:nth-child(3) { top: 14px; }
+
+        .menu-toggle.open span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 7px;
+        }
+        .menu-toggle.open span:nth-child(2) { opacity: 0; }
+        .menu-toggle.open span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 7px;
+        }
+
+        /* Hover effect */
+        .menu-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+        }    
+
+        /* Navigation Menu */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background-color: var(--cream);
+            z-index: 999;
+            transition: right 0.4s ease-out;
+            padding: 80px 30px;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-menu.show { right: 0; }
+
+        .nav-menu a {
+            display: block;
+            color: var(--dark);
+            text-decoration: none;
+            padding: 15px 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--gold);
+            transform: translateX(5px);
+        }    
+
+        /* Content Sections */
+        .header {
+            text-align: center;
+            padding: 1rem 0 3rem;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 15s0px;
+        }
+        .header h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 600;
+            margin: 0.5rem 0;
+            margin-bottom: 250px;
+            letter-spacing: -1px;
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 700;
+            margin: -0.5rem 0;
+            letter-spacing: 1px;
+            color: var(--dark);
+        }
+        
+        .header p {
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 500;
+            margin-bottom: -0.5rem;
+            color: var(--gold);
+        }
+        .header .divider {
+            width: 200px;
+            align-items: center;
+            margin-bottom: 70px;
+        }
+
+        .header pp {
+            text-align: center;
+            padding: 2rem 20px 6rem;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            color: #777;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        .page-header {
+            text-align: center;
+            padding: 4rem 0 2rem;
+        }
+        
+        .page-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Back Button Styles */
+        .back-button {
+            position: fixed;
+            top: max(30px, env(safe-area-inset-top));
+            left: max(30px, env(safe-area-inset-left));
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1001;
+            transition: all 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .back-button::before {
+            content: "←";
+            font-size: 24px;
+            color: var(--dark);
+            display: block;
+            line-height: 1;
+            margin-top: -2px;
+            margin-left: -2px;
+        }
+
+        .back-button:hover {
+            background: var(--gold);
+            transform: scale(1.05);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+        }
+        .back-button.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+        }
+
+        /* Adjust for mobile */
+        @media (orientation: portrait) {
+            .back-button {
+                width: 40px;
+                height: 40px;
+                top: max(20px, env(safe-area-inset-top));
+                left: max(20px, env(safe-area-inset-left));
+            }
+            
+            .back-button::before {
+                font-size: 20px;
+            }
+        }
+
+         /* Countdown Section */
+        .countdown-section {
+            background: #f8f0f5;
+            padding: 5rem 2rem;
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .countdown-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #5d3a4e;
+            margin-bottom: 1.5rem;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .timer-box {
+            background: #fff;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            min-width: 120px;
+        }
+
+        .timer-box div:first-child {
+            font-size: 2.5rem;
+            color: #9d6b7e;
+            font-weight: 700;
+        }
+        .timerbtn {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            padding: 15px;
+            background-color:  #9d6b7e;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border-radius: 50px;
+            transition: all 0.4s ease !important;
+            margin: 0 auto;
+        }
+        
+        .timerbtn:hover {
+            background-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .capture {
+            text-align: center;
+            padding: 4rem 20px 2rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            letter-spacing: 1px;
+            color: #777;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+            margin-bottom: 100px;
+        }
+
+        /* Couple Sections - Grid Layout */
+        .couples-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        @media (orientation: landscape) {
+            .couples-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+            .couple-section {
+                transition: transform 0.3s ease;
+            }
+            .couple-section:hover {
+            transform: translateY(-10px);
+            }
+        }
+
+        .couple-section {
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+            
+        /* Enhanced Gallery Styles */
+        .couple-gallery {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 125%; /* 4:5 ratio */
+            overflow: hidden;
+            touch-action: pan-y;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        @media (orientation: landscape) {
+            .couple-gallery {
+                padding-bottom: 125%; /* Maintain 4:5 ratio on desktop */
+            }
+        }
+
+        .gallery-track {
+            display: flex;
+            height: 100%;
+            position: absolute;
+            transition: transform 0.35s ease;
+            width: 100%;
+        }
+
+        .gallery-slide {
+            width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Navigation Dots */
+        .gallery-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        /* Arrow Navigation */
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 10;
+            transform: translateY(-50%);
+        }
+
+        .gallery-arrow {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .gallery-arrow:hover {
+            background: white;
+        }
+
+        /* Hide arrows on mobile */
+        @media (orientation: portrait) {
+            .gallery-arrow {
+                display: none;
+            }
+        }
+
+        .couple-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            margin: 0 auto;
+            color: var(--dark);
+            padding: 20px 0 10px;
+        }
+
+        .couple-desc {
+            max-width: 100%;
+            margin: 0 auto;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            color: #555;
+            line-height: 1.7;
+            padding: 0 15px 20px;
+        }
+
+
+                /* ===== Portfolio Promo Styles ===== */
+        
+              .portfolio-promo {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56%; /* 3:2 aspect ratio (2/3*100) */
+            overflow: hidden;
+            margin-bottom: 1px;
+        }
+
+        .portfolio-promo-2 {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56%; /* 5:4 aspect ratio */
+            overflow: hidden;
+            margin-bottom: 1px;
+        }
+
+        .portfolio-promo-container {
+            opacity: 0;
+            max-width: 1500px;
+            margin : 0 auto;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .portfolio-promo-container.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (orientation: landscape) {
+            .portfolio-promo-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1px;
+                padding: 0 5px;
+            }
+            
+        }
+
+        @media (orientation: portrait) {
+            .portfolio-promo,
+            .portfolio-promo-2 {
+                padding-bottom: 56%; /* 3:2 ratio */
+                gap: 1px;
+            }
+        }
+
+        @media (orientation: landscape) {
+            .portfolio-promo-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1px;
+            }
+            
+            .portfolio-promo {
+                padding-bottom: 56%; 
+            }
+            
+            .portfolio-promo-2 {
+                padding-bottom: 56%; /* 5:4 ratio */
+            }
+        }
+
+        .portfolio-promo-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .more-porto {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .more-porto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.6s ease;
+        }
+
+        .promo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: rgba(24, 24, 24, 0.7);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+
+        .promo-overlay h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 2vw, 2rem);
+            color: var(--cream);
+            transform: translateY(20px);
+            transition: transform 0.6s ease;
+        }
+
+        .promo-overlay .divider {
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            margin: 1rem auto;
+            transition: width 0.6s ease 0.2s;
+        }
+
+        .promo-overlay p {
+            font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+            color: var(--cream);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.6s ease 0.4s;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        .portfolio-promo.in-view .more-porto img,
+        .portfolio-promo-2.in-view .more-porto img {
+            transform: scale(1.05);
+            transition: transform 0.6s ease;
+        }
+
+        .portfolio-promo.in-view .promo-overlay,
+        .portfolio-promo-2.in-view .promo-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-promo.in-view .promo-overlay h3,
+        .portfolio-promo-2.in-view .promo-overlay h3 {
+            transform: translateY(0);
+        }
+
+        .portfolio-promo.in-view .promo-overlay .divider,
+        .portfolio-promo-2.in-view .promo-overlay .divider {
+            width: 120px;
+        }
+
+        .portfolio-promo.in-view .promo-overlay p,
+        .portfolio-promo-2.in-view .promo-overlay p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    
+        @media (orientation: portrait) {
+            .promo-image {
+                padding-bottom: 80%;
+            }
+        }
+
+        /* gallery hidden page */
+        /* Modify existing hidden-page styles */
+        .hidden-page, .portfolio-page {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .hidden-page.active, .portfolio-page.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Remove display: none from original CSS */
+        .hidden-page {
+            display: block; /* Changed from display: none */
+        }
+
+        /* Portfolio Page (hidden by default) */
+        .portfolio-page {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            z-index: 1000;
+            overflow-y: auto;
+            padding-top: 60px;
+        }
+
+        .portfolio-page.active {
+            display: block;
+        }
+
+        .portfolio-header {
+            text-align: center;
+            padding: 5rem 0 3rem;
+        }
+
+        .portfolio-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-header p {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+        }
+
+        .portfolio-item {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .portfolio-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 80vh;
+            max-height: 800px;
+            background-color: var(--light-gray);
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-caption {
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .portfolio-caption h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-caption p {
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 2rem auto 4rem;
+            padding: 12px 25px;
+            background-color: var(--dark);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .portfolio-divider {
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            margin: 2rem auto;
+            transition: width 0.6s ease;
+        }
+        /* Instagram Section */
+        .instagram {
+            text-align: center;
+            padding: 4rem 20px 2rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            letter-spacing: 1px;
+        }
+        
+        .instagram a {
+            color: var(--gold);
+            text-decoration: none;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 2px;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 20px 6rem;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            color: #777;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .divider {
+            width: 80px;
+            height: 1px;
+            background: var(--gold);
+            margin: 3rem auto;
+        }
+
+        /* Mobile Optimizations */
+        @media (orientation: portrait) {
+            .header {
+                padding: 1rem 0 2rem;
+            }
+            
+            .menu-toggle {
+                top: 20px;
+                right: 20px;
+            }
+            
+            .fixed-cta {
+                bottom: 1rem;
+            }
+            
+            .couple-section {
+                margin-bottom: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-screen hero image -->
+    <div class="hero-image"></div>
+
+    <!-- Hamburger Menu Button -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Navigation Menu -->
+     <nav class="nav-menu" id="navMenu">
+    <a href="#">Home</a>
+    <a href="about.html">About</a>
+    <a href="portfolio.html">Gallery</a>
+    <a href="https://instagram.com/serindu.project">Social Media</a>
+    <a href="https://wa.me/6289680960434">Contact</a>
+</nav>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Hero Header -->
+         <header class="header" data-scroll="fade-up">
+            <h4>Hi, You've Found Us</h4>
+        </header>
+        <header class="header" data-scroll="fade-up">
+            <p data-scroll="fade-up" data-scroll-delay="100">WELCOME TO</p>
+            <h1>Serindu Project</h1>
+            
+            <div class="divider" data-scroll="fade-up" data-scroll-delay="200"></div>
+            <pp data-scroll="fade-up" data-scroll-delay="100">Your satisfaction is our utmost priority. From your initial inquiry to the final delivery of your images, we are committed to providing an exceptional client experience. We believe in clear communication, transparency, and a collaborative approach. Our goal is not just to deliver beautiful photographs, but to build lasting relationships with our clients, becoming your go-to photographers for all of life's significant moments.</pp>
+        </header>
+       
+<!-- Countdown Section -->
+    <section class="countdown-section" id="countdown">
+        <h2 class="countdown-title">Let's Prepare Your Special Day!</h2>
+        <p>Special offer ending in:</p>
+        <div class="timer" id="timer">
+            <div class="timer-box">
+                <div id="days">06</div>
+                <small>Days</small>
+            </div>
+            <div class="timer-box">
+                <div id="hours">23</div>
+                <small>Hours</small>
+            </div>
+            <div class="timer-box">
+                <div id="minutes">59</div>
+                <small>Minutes</small>
+            </div>
+            <div class="timer-box">
+                <div id="seconds">59</div>
+                <small>Seconds</small>
+            </div>
+        </div>
+        <a href="https://wa.me/6289680960434" class="timerbtn">Contact Us</a>
+    </section>
+
+    <div class="capture" data-scroll="fade-up">
+      <p>Ready to capture your next unforgettable moment? We invite you to explore our portfolios.</p>
+    </div>
+
+    <div class="container">
+
+        <!-- Couple Sections -->
+        <div class="couples-grid" data-scroll="fade-up">
+            <!-- Couple 1 (15 images) -->
+            <div class="couple-section">
+                <div class="couple-gallery">
+                    <div class="gallery-track">
+                        <!-- 15 WebP images -->
+                        <div class="gallery-slide active"><img src="images/A1.webp" alt="A1"></div>
+                        <div class="gallery-slide"><img src="images/A2.webp" alt="A2"></div>
+                        <div class="gallery-slide"><img src="images/A3.webp" alt="A3"></div>
+                        <div class="gallery-slide"><img src="images/A4.webp" alt="A4"></div>
+                        <div class="gallery-slide"><img src="images/A5.webp" alt="A5"></div>
+                        <div class="gallery-slide"><img src="images/A6.webp" alt="A6"></div>
+                        <div class="gallery-slide"><img src="images/A7.webp" alt="A7"></div>
+                        <div class="gallery-slide"><img src="images/A8.webp" alt="A8"></div>
+                        <div class="gallery-slide"><img src="images/A9.webp" alt="A9"></div>
+                        <div class="gallery-slide"><img src="images/A10.webp" alt="A10"></div>
+                        <div class="gallery-slide"><img src="images/A11.webp" alt="A11"></div>
+                        <div class="gallery-slide"><img src="images/A12.webp" alt="A12"></div>
+                        <div class="gallery-slide"><img src="images/A13.webp" alt="A13"></div>
+                        <div class="gallery-slide"><img src="images/A14.webp" alt="A14"></div>
+                        <div class="gallery-slide"><img src="images/A15.webp" alt="A15"></div>
+                    </div>
+                    
+                    <!-- Navigation Arrows -->
+                    <div class="gallery-nav">
+                        <div class="gallery-arrow left">←</div>
+                        <div class="gallery-arrow right">→</div>
+                    </div>
+                    
+                    <!-- Navigation Dots (15 dots) -->
+                    <div class="gallery-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+                <h2 class="couple-name">FANDI & LIA</h2>
+                <p class="couple-desc">Beautiful moments captured in 15 stunning photos</p>
+            </div>
+
+            <!-- Couple 2 (13 images) -->
+            <div class="couple-section">
+                <div class="couple-gallery">
+                    <div class="gallery-track">
+                        <!-- 13 JPG images -->
+                        <div class="gallery-slide active"><img src="images/B1.jpg" alt="B1"></div>
+                        <div class="gallery-slide"><img src="images/B2.jpg" alt="B2"></div>
+                        <div class="gallery-slide"><img src="images/B3.jpg" alt="B3"></div>
+                        <div class="gallery-slide"><img src="images/B4.jpg" alt="B4"></div>
+                        <div class="gallery-slide"><img src="images/B5.jpg" alt="B5"></div>
+                        <div class="gallery-slide"><img src="images/B6.jpg" alt="B6"></div>
+                        <div class="gallery-slide"><img src="images/B7.jpg" alt="B7"></div>
+                        <div class="gallery-slide"><img src="images/B8.jpg" alt="B8"></div>
+                        <div class="gallery-slide"><img src="images/B9.jpg" alt="B9"></div>
+                        <div class="gallery-slide"><img src="images/B10.jpg" alt="B10"></div>
+                        <div class="gallery-slide"><img src="images/B11.jpg" alt="B11"></div>
+                        <div class="gallery-slide"><img src="images/B12.jpg" alt="B12"></div>
+                        <div class="gallery-slide"><img src="images/B13.jpg" alt="B13"></div>
+                    </div>
+                    
+                    <div class="gallery-nav">
+                        <div class="gallery-arrow left">←</div>
+                        <div class="gallery-arrow right">→</div>
+                    </div>
+                    
+                    <!-- Navigation Dots (13 dots) -->
+                    <div class="gallery-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+                <h2 class="couple-name">KRISNA & NINDY</h2>
+                <p class="couple-desc">13 precious memories from their special day</p>
+            </div>
+
+            <!-- Couple 3 (12 images) -->
+            <div class="couple-section">
+                <div class="couple-gallery">
+                    <div class="gallery-track">
+                        <!-- 12 JPG images -->
+                        <div class="gallery-slide active"><img src="images/C1.jpg" alt="C1"></div>
+                        <div class="gallery-slide"><img src="images/C2.jpg" alt="C2"></div>
+                        <div class="gallery-slide"><img src="images/C3.jpg" alt="C3"></div>
+                        <div class="gallery-slide"><img src="images/C4.jpg" alt="C4"></div>
+                        <div class="gallery-slide"><img src="images/C5.jpg" alt="C5"></div>
+                        <div class="gallery-slide"><img src="images/C6.jpg" alt="C6"></div>
+                        <div class="gallery-slide"><img src="images/C7.jpg" alt="C7"></div>
+                        <div class="gallery-slide"><img src="images/C8.jpg" alt="C8"></div>
+                        <div class="gallery-slide"><img src="images/C9.jpg" alt="C9"></div>
+                        <div class="gallery-slide"><img src="images/C10.jpg" alt="C10"></div>
+                        <div class="gallery-slide"><img src="images/C11.jpg" alt="C11"></div>
+                        <div class="gallery-slide"><img src="images/C12.jpg" alt="C12"></div>
+                    </div>
+                    
+                    <div class="gallery-nav">
+                        <div class="gallery-arrow left">←</div>
+                        <div class="gallery-arrow right">→</div>
+                    </div>
+                    
+                    <!-- Navigation Dots (12 dots) -->
+                    <div class="gallery-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+    <h2 class="couple-name">ABAS & GETSA</h2>
+    <p class="couple-desc">12 beautiful moments from their engagement day</p>
+  </div>
+
+</div>
+</div>
+
+    <!-- ===== Portfolio Promo Container ===== -->
+    <div class="portfolio-promo-container" data-scroll="fade-up">
+      <!-- Original Portfolio Promo -->
+     <div class="portfolio-promo">
+    <a href="portfolio.html" class="portfolio-promo-link"> <!-- Changed to direct link -->
+        <div class="more-porto"><img src="images/More.jpg" alt="more"></div>
+        <div class="promo-overlay">
+            <h3>More Unfolded Stories</h3>
+            <div class="divider"></div>
+            <p>Explore our collection of captured moments</p>
+        </div>
+    </a>
+</div>
+      
+      <!-- Duplicate Portfolio Promo -->
+      <div class="portfolio-promo-2">
+        <a href="https://wa.me/6289680960434" class="portfolio-promo-link">
+          <div class="more-porto"><img src="images/More2.jpg" alt="more"></div>
+          <div class="promo-overlay">
+            <h3>Get in Touch</h3>
+            <div class="divider"></div>
+            <p>Contact Us on WhatsApp</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="container">
+
+    <!-- Instagram Section -->
+    <div class="instagram" data-scroll="fade-up">
+      <p>Follow our journey <a href="https://instagram.com/serindu.project" target="_blank">@serindu.project</a></p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" data-scroll="fade-up">
+      <p>At Serindu Project, we believe that every photograph tells a unique story, preserves a precious memory, and freezes a fleeting moment in time.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Get the button and the section you want to trigger its appearance
+    const fixedCta = document.querySelector('.fixed-cta');
+    let ctaActivated = false;
+
+    document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+        document.body.style.zoom = 0.99; // iOS hack
+    });
+
+document.addEventListener('gesturechange', function(e) {
+        e.preventDefault();
+        document.body.style.zoom = 0.99;
+    });
+
+document.addEventListener('gestureend', function(e) {
+        e.preventDefault();
+        document.body.style.zoom = 1;
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Menu toggle functionality
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+   
+      menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menuToggle.classList.toggle('open');
+        navMenu.classList.toggle('show');
+        document.body.style.overflow = navMenu.classList.contains('show') ? 'hidden' : '';
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+          navMenu.classList.remove('show');
+          menuToggle.classList.remove('open');
+          aboutPage.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Gallery functionality for all galleries
+      const galleries = document.querySelectorAll('.couple-gallery');
+      const galleryNavBtn = document.getElementById('galleryNavBtn');
+      const portfolioPage = document.getElementById('portfolioPage');
+
+     // Improved Gallery Slider for All Devices
+    galleries.forEach(gallery => {
+        const track = gallery.querySelector('.gallery-track');
+        const slides = gallery.querySelectorAll('.gallery-slide');
+        const dots = gallery.querySelectorAll('.dot');
+        const arrowLeft = gallery.querySelector('.gallery-arrow.left');
+        const arrowRight = gallery.querySelector('.gallery-arrow.right');
+        
+        let currentIndex = 0;
+        let startX = 0;
+        let isDragging = false;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+
+        // Set initial position
+        updateSlide();
+
+        // Touch events for mobile/tablet
+        gallery.addEventListener('touchstart', touchStart, { passive: true });
+        gallery.addEventListener('touchmove', touchMove, { passive: false }); // Changed to non-passive
+        gallery.addEventListener('touchend', touchEnd);
+
+        // Mouse events for desktop
+        gallery.addEventListener('mousedown', touchStart);
+        gallery.addEventListener('mousemove', touchMove);
+        gallery.addEventListener('mouseup', touchEnd);
+        gallery.addEventListener('mouseleave', touchEnd);
+        // Arrow navigation for desktop
+        if (arrowLeft && arrowRight) {
+            arrowLeft.addEventListener('click', () => {
+                currentIndex = Math.max(currentIndex - 1, 0);
+                updateSlide();
+          });
+
+            arrowRight.addEventListener('click', () => {
+            currentIndex = Math.min(currentIndex + 1, slides.length - 1);
+            updateSlide();
+          });
+        }
+
+       // Dot navigation (works on all devices)
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateSlide();
+            });
+        });
+
+        function touchStart(e) {
+            if (e.type === 'mousedown') e.preventDefault();
+            isDragging = true;
+            startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            prevTranslate = currentIndex * -gallery.offsetWidth;
+            currentTranslate = prevTranslate;
+        }
+
+        function touchMove(e) {
+            if (!isDragging) return;
+            e.preventDefault(); // Prevent scrolling while dragging
+            const currentPosition = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            currentTranslate = prevTranslate + currentPosition - startX;
+            track.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        function touchEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const movedBy = currentTranslate - (currentIndex * -gallery.offsetWidth);
+            
+            if (movedBy < -50 && currentIndex < slides.length - 1) {
+                currentIndex += 1;
+            }
+            
+            if (movedBy > 50 && currentIndex > 0) {
+                currentIndex -= 1;
+            }
+            
+            updateSlide();
+        }
+
+        function getPositionX(e) {
+          return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        }
+
+        function updateSlide() {
+        currentTranslate = currentIndex * -gallery.offsetWidth;
+        prevTranslate = currentTranslate;
+        track.style.transform = `translateX(${currentTranslate}px)`;
+        
+        // Update active dot
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+        });
+          
+          // Update slide classes
+          slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentIndex);
+          });
+        }
+      });
+
+      // Scroll animation handler
+      function handleScrollAnimations() {
+        const scrollElements = document.querySelectorAll('[data-scroll]');
+        const windowHeight = window.innerHeight;
+        const windowTop = window.scrollY;
+        const windowBottom = windowTop + windowHeight;
+
+        scrollElements.forEach(element => {
+          const elementTop = element.getBoundingClientRect().top + windowTop;
+          const elementBottom = elementTop + element.offsetHeight;
+          const delay = element.dataset.scrollDelay || 0;
+
+          if (elementBottom >= windowTop && elementTop <= windowBottom) {
+            setTimeout(() => {
+              element.classList.add('is-visible');
+            }, delay);
+          }
+        });
+
+        // Add animation for the promo container
+        const promoContainer = document.querySelector('.portfolio-promo-container');
+        if (promoContainer) {
+          const containerTop = promoContainer.getBoundingClientRect().top;
+          if (containerTop < windowHeight * 0.8) {
+            promoContainer.classList.add('is-visible');
+          }
+        }
+      }
+
+      // Initialize scroll animations
+      window.addEventListener('load', handleScrollAnimations);
+      window.addEventListener('scroll', handleScrollAnimations);
+      window.addEventListener('resize', handleScrollAnimations);
+
+      // Make sure header is visible on initial load
+      document.querySelector('.header').classList.add('is-visible');
+
+      // Prevent zooming on mobile
+      document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+      });
+
+      // Improved mobile touch handling
+      document.addEventListener('touchmove', function(e) {
+        if (navMenu.classList.contains('show')) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Fixed Portfolio Promo Scroll Animation
+      function handlePortfolioPromo() {
+        const portfolioPromos = document.querySelectorAll('.portfolio-promo, .portfolio-promo-2');
+        
+        portfolioPromos.forEach(promo => {
+          const rect = promo.getBoundingClientRect();
+          const triggerPoint = window.innerHeight * 0.75;
+          
+          // Check if promo is in viewport
+          if (rect.top < triggerPoint && rect.bottom > 0) {
+            promo.classList.add('in-view');
+          } else {
+            promo.classList.remove('in-view');
+          }
+        });
+      }
+
+      // Add to existing event listeners
+      window.addEventListener('scroll', handlePortfolioPromo);
+      window.addEventListener('load', handlePortfolioPromo);
+      window.addEventListener('resize', handlePortfolioPromo);
+
+      // Portfolio Page Navigation
+
+      // Back button click
+      backButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        portfolioPage.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+        
+        // Scroll smoothly back to top of home page
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      // COUNTDOWN TIMER FIXED HERE (inside DOMContentLoaded)
+      const countDownDate = new Date().getTime() + (6 * 24 * 60 * 60 * 1000);
+
+      const timerInterval = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+        document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+        document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+        document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+
+        if (distance < 0) {
+          clearInterval(timerInterval);
+          document.getElementById("timer").innerHTML = "OFFER EXPIRED";
+        }
+      }, 1000);
+    {};
+   </script>
+</body>
+</html>

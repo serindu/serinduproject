@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Serindu Project | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+    
+        /* Portfolio Page Specific Styles */
+        .portfolio-header {
+            text-align: center;
+            padding: 5rem 0 3rem;
+        }
+
+        .portfolio-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-header p {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+        }
+
+        .portfolio-item {
+            margin-bottom: 4rem;
+            opacity: 1;
+            transform: none;
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 80vh;
+            max-height: 800px;
+            background-color: var(--light-gray);
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-caption {
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .portfolio-caption h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-caption p {
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            position: fixed;
+            top: max(30px, env(safe-area-inset-top));
+            left: max(30px, env(safe-area-inset-left));
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: all 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .back-button::before {
+            content: "←";
+            font-size: 24px;
+            color: var(--dark);
+            display: block;
+            line-height: 1;
+            margin-top: -2px;
+            margin-left: -2px;
+        }
+
+        .back-button:hover {
+            background: var(--gold);
+            transform: scale(1.05);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-button.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+        }
+
+        /* Adjust for mobile */
+        @media (orientation: portrait) {
+            .back-button {
+                width: 40px;
+                height: 40px;
+                top: max(20px, env(safe-area-inset-top));
+                left: max(20px, env(safe-area-inset-left));
+            }
+            
+            .back-button::before {
+                font-size: 20px;
+            }
+        }
+
+        .portfolio-divider {
+            width: 120px;
+            height: 1px;
+            background: var(--gold);
+            margin: 2rem auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Portfolio Content -->
+    <div class="container">
+        <header class="portfolio-header">
+            <h1>Our Portfolio</h1>
+            <p>Beautiful Moments Captured</p>
+            <div class="portfolio-divider"></div>
+        </header>
+        
+        <div class="portfolio-single-column">
+            <!-- Item 1 -->
+            <div class="portfolio-item">
+                <div class="portfolio-image" style="background-image: url('images/A1.webp');"></div>
+                <div class="portfolio-caption">
+                    <h3>Fandi & Lia</h3>
+                    <p>Beautiful moments captured in 15 stunning photos</p>
+                </div>
+            </div>
+            
+            <!-- Item 2 -->
+            <div class="portfolio-item">
+                <div class="portfolio-image" style="background-image: url('images/B1.jpg');"></div>
+                <div class="portfolio-caption">
+                    <h3>Krisna & Nindy</h3>
+                    <p>13 precious memories from their special day</p>
+                </div>
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="portfolio-item">
+                <div class="portfolio-image" style="background-image: url('images/C1.jpg');"></div>
+                <div class="portfolio-caption">
+                    <h3>Abas & Getsa</h3>
+                    <p>12 beautiful moments from their engagement day</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+        <a href="index.html" class="back-button" aria-label="Back to home"></a>
+    </div>
+
+    <script> 
+        // Prevent zooming on mobile
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+    
+        // Back button scroll behavior
+        const backButton = document.querySelector('.back-button');
+        let lastScrollPosition = 0;
+        const scrollThreshold = 100; // Pixels to scroll before hiding
+
+        window.addEventListener('scroll', function() {
+            const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (currentScrollPosition > lastScrollPosition && currentScrollPosition > scrollThreshold) {
+                // Scrolling down
+                backButton.classList.add('hidden');
+            } else {
+                // Scrolling up or at top
+                backButton.classList.remove('hidden');
+            }
+            
+            lastScrollPosition = currentScrollPosition;
+        });
+
+        // Show button when mouse moves near top of screen
+        document.addEventListener('mousemove', function(e) {
+            if (e.clientY < 50) {
+                backButton.classList.remove('hidden');
+            }
+        });
+        // Show button when touching top of screen on mobile
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches[0].clientY < 50) {
+                backButton.classList.remove('hidden');
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
